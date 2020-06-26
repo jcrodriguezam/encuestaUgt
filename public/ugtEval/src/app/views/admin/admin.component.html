@@ -1,0 +1,42 @@
+
+<div style="min-height: 100vh;">
+  <div class="container d-flex justify-content-center  mt-4 mb-4 ml-1 mr-1">
+    <div class="card" style="max-width: 350px;">
+        <div class="card-header">
+            <span data-toggle="collapse" data-target="#collapseUno" aria-expanded="true" aria-controls="collapseUno"><b>INFORMACIÓN GENERAL</b></span>
+          </div>
+          <div class="card-body" id="collapseUno">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Id encuesta activa: <b>{{pollId}}</b></li>
+                <li class="list-group-item">Número de encuestas realizadas: <b>{{pollAnswers.length}}</b></li>
+            </ul>
+          </div>
+
+    </div>
+</div>
+
+<div class="container d-flex flex-column justify-content-center  mt-4 mb-4 ml-1 mr-1" >
+    <div class="card  mt-2 mb-2" style="max-width: 350px;">
+        <div class="card-header">
+            <span data-toggle="collapse" data-target="#collapseUno" aria-expanded="true" aria-controls="collapseUno"><b>Encuesta </b></span>
+          </div>
+          <div class="card-body">
+            <p class="card-text">Descripcion</p>
+          </div>
+          <div>
+            <div style="display: block">
+              <canvas baseChart
+                      [datasets]="barChartData"
+                      [options]="barChartOptions"
+                      [legend]="true"
+                      [chartType]="barChartType"
+                      [plugins]="lineChartPlugins"
+                      >
+              </canvas>
+            </div>
+          </div>
+    </div>
+</div>
+</div>
+
+
