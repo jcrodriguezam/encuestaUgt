@@ -16,13 +16,15 @@ import { AdminComponent } from './views/admin/admin.component';
 
 import { ChartsModule } from 'ng2-charts';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AlternateComponent } from './views/alternate/alternate.component';
 
 firebase.initializeApp(environment.firebaseConfig);
 @NgModule({
   declarations: [
     AppComponent,
     PollComponent,
-    AdminComponent
+    AdminComponent,
+    AlternateComponent
   ],
   imports: [
     BrowserModule,
