@@ -1,6 +1,8 @@
 
 <div *ngIf="showWellcome" class="container d-flex justify-content-center mt-4 mb-4">
   <div>
+    <h3>Comité de Empresa ECI Ademuz - Nuevo Centro </h3>
+    <br />
       <p>En primer lugar, esperamos desde el Comité de Empresa de Ademuz - Nuevo Centro que tanto tú como tus familiares y seres queridos estéis bien de salud.</p>
       <p>Una de las medidas importantes para la vuelta a la actividad es facilitar la movilidad de todo el personal, y para ello nuestro Comité de Empresa tiene como cometido negociar plazas de aparcamiento cercanas al centro de trabajo a un precio lo más reducido posible.</p>
       <p>Para facilitar la negociación y que las diferentes empresas nos hagan sus ofertas, te pedimos que rellenes esta breve encuesta con la mayor sinceridad posible y sabiendo que cumplimentar esta encuesta <b> NO TE OBLIGA A NADA.</b></p>
@@ -18,12 +20,12 @@
 <div *ngIf="showIdentify" class="container d-flex justify-content-center mt-4 mb-4">
   <div class="container">
     <div class="row" style="position:relative; width:225px; margin: auto;">
-      <p style="position:absolute; top:80px; left:76px; font-size:.8em"><b>{{formattedClientId}}</b></p>
-      <img src="../assets/tarjetaECI2.png" width="100%"  class="align-middle"  style="box-shadow: 5px 5px 6px rgba(0,0,0,.2);max-width: 300px;margin: auto;" alt="">
+      <p style="position:absolute; top:80px; left:10px; right: 10px; text-align: center; font-size:.8em"><b>{{clientId}}</b></p>
+      <img src="../assets/tarjetaECI2.png" width="100%"  class="align-middle"  style="max-width: 300px;margin: auto;" alt="">
     </div>
     <div class="row mt-3 mt-3">
       <p>Introduce tu número de empleado:</p>
-      <input type="text" maxlength="10" class="form-control" placeholder="Número de empleado" aria-label="Número de empleado" aria-describedby="basic-addon2" (keyup)="onKey($event)">
+      <input type="number" class="form-control" placeholder="Número de empleado" aria-label="Número de empleado" aria-describedby="basic-addon2" (keyup)="onKey($event)">
     </div>
     <div class="row mt-3 mt-3 justify-content-center">
       <p class="lead">
@@ -54,7 +56,7 @@
     </div>
     <div class="row mt-3 mt-3 justify-content-center">
       <p class="lead">
-        <a class="btn btn-dark btn-lg"  [ngClass]="{'disabled': !selectedPrice }" href="#" role="button" (click)="showEndPage()">Continuar</a>
+        <a class="btn btn-dark btn-lg"  [ngClass]="{'disabled': !selectedPrice }" href="#" role="button" (click)="showEndPage()">Finalizar</a>
       </p>
     </div>
   </div>
@@ -63,6 +65,8 @@
   
 <div *ngIf="showEnd" class="container d-flex justify-content-center mt-4 mb-4">
   <div class="">
+    <h1>Gracias</h1>
+    <br />
     <p class="lead">Agradecemos tu participación y recuerda que rellenar esta encuesta no te compromete a nada. Se trata de tener una estimación para negociar con las empresas.
       <br >Recibe un cordial saludo,</p>
       <hr class="my-4">

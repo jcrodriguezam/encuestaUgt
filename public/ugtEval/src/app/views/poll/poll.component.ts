@@ -17,7 +17,6 @@ export class PollComponent implements OnInit {
   public showEnd = false;
   public priceOptions = [20, 25, 30, 35, 40, 45]
   public clientId = '';
-  public formattedClientId='';
   public selectedPrice = '';
   public showIdentify2 = false;
 public  validClientId=false;
@@ -68,46 +67,8 @@ public  validClientId=false;
 
   onKey(event: any) {
     const id = event.target.value;
-    console.log(parseInt(id, 10))
-    if (parseInt(id, 10) === NaN) {
-      this.clientId='';
-      return;
-    }
-
-    let value= '';
-    let formattedValue= '';
-    let arrChars = Array.from(id)
-    const getValue = (v) => { return v || '' }
-
-    formattedValue = getValue(arrChars[0]) +
-    getValue(arrChars[1]) +
-    ' ' +
-    getValue(arrChars[2]) +
-    getValue(arrChars[3]) +
-    getValue(arrChars[4]) +
-    getValue(arrChars[5]) +
-    getValue(arrChars[6]) +
-    getValue(arrChars[7]) +
-    ' ' + 
-    getValue(arrChars[8]) +
-    getValue(arrChars[9]);
-
-    value = getValue(arrChars[0]) +
-    getValue(arrChars[1]) +
-    getValue(arrChars[2]) +
-    getValue(arrChars[3]) +
-    getValue(arrChars[4]) +
-    getValue(arrChars[5]) +
-    getValue(arrChars[6]) +
-    getValue(arrChars[7]) +
-    getValue(arrChars[8]) +
-    getValue(arrChars[9]);
-
-    this.formattedClientId = formattedValue;
-    this.clientId = value;
-    if(value.length === 10) {
-      this.validClientId=true;
-    }
+    this.clientId=id;
+    this.validClientId=true;
   }
 
   onItemChange(value) {
