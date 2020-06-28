@@ -12,6 +12,7 @@ export class PollComponent implements OnInit {
 
 
   public showWellcome = true;
+  public loggedIn = true;
   public showIdentify = false;
   public showParkingQuestion = false;
   public showEnd = false;

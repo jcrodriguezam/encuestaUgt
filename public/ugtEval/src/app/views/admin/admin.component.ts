@@ -10,12 +10,24 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
+  public loggedIn = false;
+  public authError = false;
+  public user = '';
+  public password = '';
   public pollId = 2;
   public pollAnswers = [];
   public sanitizedAnswers = {};
-
+  public barChartType = 'horizontalBar';
+  public barChartLegend = false;
+  public barChartData = [{
+    data: [],
+    label: ``,
+  }];
+  public bgColors = ['rgba(254,220,162,1)','rgba(178,254,161, 1)','rgba(254,191,189, 1)','rgba(164,204,255, 1)','rgba(236,254,162, 1)','rgba(183,164,254, 1)']
+  public poll = {id: null, questions: []}
   public lineChartPlugins = [ChartDataLabels];
-
+  public mostVoted='';
+  public average='';
   public barChartOptions = {
     scaleShowVerticalLines: false,
     responsive: true,
@@ -25,53 +37,48 @@ export class AdminComponent implements OnInit {
       labels: {
         boxWidth: 20,
       }
-     
     },
     layout: {
       padding: {
-          left: 0,
-          right: 50,
-          top: 0,
-          bottom: 0
+        left: 0,
+        right: 50,
+        top: 0,
+        bottom: 0
       }
-  },
-  scales: {
-    xAxes: [{
-        gridLines: {
-            drawOnChartArea: false
-        }
-    }],
-    yAxes: [{
-        gridLines: {
-            drawOnChartArea: false
-        }
-    }]
-},
-plugins: {
-  datalabels: {
-    anchor: 'end',
-    align: 'end',
-    color: '#888',
-    formatter: (value, ctx) => {            
-      let percentage = (value * 100 / this.pollAnswers.length).toFixed(1) + "%";
-      return percentage;
     },
-  }
-}
+    scales: {
+      xAxes: [{
+          gridLines: {
+              drawOnChartArea: false
+          }
+      }],
+      yAxes: [{
+          gridLines: {
+              drawOnChartArea: false
+          }
+      }]
+    },
+    plugins: {
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+        color: '#888',
+        formatter: (value, ctx) => {            
+          let percentage = (value * 100 / this.pollAnswers.length).toFixed(1) + "%";
+          return percentage;
+        },
+      }
+    }
   };
-  public barChartType = 'horizontalBar';
-  public barChartLegend = false;
-  public barChartData = [];
-  public bgColors = ['rgba(10, 0, 0, 0.4)','rgba(100, 0, 0, 0.4)','rgba(150, 0, 0, 0.4)','rgba(200, 0, 0, 0.4)']
+  
   public generalDataset = {
     data: [0], 
     label: '', 
     backgroundColor: 'rgba(0, 0, 0, 0.1)'
   }
-  public poll = {id: null, questions: []}
+
   constructor(public pollService: PollService) { 
     Chart.plugins.unregister(ChartDataLabels);
-
   }
 
   ngOnInit(): void {
@@ -80,17 +87,27 @@ plugins: {
       that.setPoll(poll) 
       that.getAnswers();
     });
-
   }
 
   setPoll(poll) {
-    console.log('poll:', poll)
     this.poll = poll
+  }
+
+  loginTest() {
+    console.log('dentro')
+    console.log('user', this.user)
+    console.log('pas', this.password)
+    if(this.user === 'admin' && this.password === 'sinapsis') {
+      this.loggedIn = true;
+    } else {
+      this.authError = true;
+    }
   }
 
   setPollAnswers(answers){
     this.pollAnswers = answers;
   }
+
   getBarChartData(index) {
     const question = `q${index}`;
     let barChartData = []
@@ -99,52 +116,53 @@ plugins: {
     })
 
     return barChartData;
-   // const barChartData =  {data: [this.sanitizedAnswers[question]], label: 'Series A'},
   }
 
   getAnswers = () => {
     let that = this;
     this.pollService.getPollAnswers(this.pollId)
     .then(function(answers) { 
-      console.log(answers)
       that.setPollAnswers(answers)
       that.sanitizePollAnswers();
     });
   }
 
   sanitizePollAnswers = () => {
-   let sanitizedAnswers = {};
-   console.log('this.pollAnswers')
-   console.log(this.pollAnswers)
-   const chartData = {};
-   this.pollAnswers.forEach((answer, i) => {
-    if (!chartData[answer.price]) {
-      chartData[answer.price] = 1;
-    } else {
-      chartData[answer.price] += 1;
+    const chartData = {};
+    let media = 0;
+    this.pollAnswers.forEach((answer, i) => {
+      if (!chartData[answer.price]) {
+        chartData[answer.price] = 1;
+      } else {
+        chartData[answer.price] += 1;
+      }
+    });
+
+    const d = []
+    let i = 0;
+    let mostVoted = 0;
+    for(let mydata in chartData) {
+      if (mostVoted < chartData[mydata]) { 
+        this.mostVoted = `${mydata}  €`;
+        mostVoted = chartData[mydata];
+      } else if (mostVoted === chartData[mydata]) {
+        this.mostVoted += `/ ${mydata}  €`;
+      }
+
+        const item = {
+        data: [chartData[mydata]],
+        label: `Precio: ${mydata}  €`,
+        backgroundColor: this.bgColors[i],
+        barPercentage: 1,
+        minBarLength: 5
+      };
+
+      i += 1
+      media += parseInt(mydata, 10) * chartData[mydata];
+      d.push(item)
     }
-   });
 
-console.log('chartData')
-console.log(chartData)
-const d = []
-let media = 0;
-for(let mydata in chartData) {
-  console.log('mydata: ', mydata)
-  const item = {
-    data: [chartData[mydata]],
-    label: `Precio: ${mydata} E`
-  };
-  media += parseInt(mydata, 10);
-  d.push(item)
-}
-
-console.log('media: ', media)
-console.log('Precio optimo: ', (media / this.pollAnswers.length))
-this.barChartData = d;
-
-
-   console.log(this.barChartData)
-   console.log(this.sanitizedAnswers)
+    this.average = `${(media / this.pollAnswers.length).toFixed(2)} €`
+    this.barChartData = d
   }
 }

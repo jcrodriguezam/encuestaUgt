@@ -17,6 +17,8 @@ import { AdminComponent } from './views/admin/admin.component';
 import { ChartsModule } from 'ng2-charts';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
+import { FormsModule } from "@angular/forms"; 
+
 firebase.initializeApp(environment.firebaseConfig);
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ firebase.initializeApp(environment.firebaseConfig);
     AngularFireDatabaseModule,
     ChartsModule,
     FontAwesomeModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,42 +1,54 @@
-
-<div style="min-height: 100vh;">
+<div *ngIf="!loggedIn" >
+  <div class="card" class="mt-10 mr-5 ml-5" style="margin-top:3em">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Usuario</label>
+        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" [(ngModel)]="user">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Contraseña</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" [(ngModel)]="password">
+      </div>
+        <button type="button" class="btn btn-dark btn-block"  (click)="loginTest()">Iniciar sesión</button>
+        <div class="alert alert-danger" style="margin-top:2em" role="alert" *ngIf="authError">
+          Nombre de usuario o contraseña no valido.
+        </div>
+  </div>
+</div>
+<div *ngIf="loggedIn">
   <div class="container d-flex justify-content-center  mt-4 mb-4 ml-1 mr-1">
     <div class="card" style="max-width: 350px;">
-        <div class="card-header">
-            <span data-toggle="collapse" data-target="#collapseUno" aria-expanded="true" aria-controls="collapseUno"><b>INFORMACIÓN GENERAL</b></span>
-          </div>
-          <div class="card-body" id="collapseUno">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Id encuesta activa: <b>{{pollId}}</b></li>
-                <li class="list-group-item">Número de encuestas realizadas: <b>{{pollAnswers.length}}</b></li>
-            </ul>
-          </div>
-
+      <div class="card-header">
+        <span data-toggle="collapse" data-target="#collapseUno" aria-expanded="true" aria-controls="collapseUno"><b>INFORMACIÓN GENERAL</b></span>
+      </div>
+      <div id="collapseUno">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Número de encuestas realizadas: <b>{{pollAnswers.length}}</b></li>
+          <li class="list-group-item">Opción más votada: <b>{{mostVoted}}</b></li>
+          <li class="list-group-item">Precio medio ponderado: <b>{{average}}</b></li>
+        </ul>
+      </div>
     </div>
-</div>
+  </div>
+  <span style="font-size: .7em; text-align: right; font-style: italic; min-width: 100vw; padding-right: 2.5em; display: block;">Id encuesta activa: <b>{{pollId}}</b></span>
 
-<div class="container d-flex flex-column justify-content-center  mt-4 mb-4 ml-1 mr-1" >
+  <div class="container d-flex flex-column justify-content-center  mt-4 mb-4 ml-1 mr-1" >
     <div class="card  mt-2 mb-2" style="max-width: 350px;">
-        <div class="card-header">
-            <span data-toggle="collapse" data-target="#collapseUno" aria-expanded="true" aria-controls="collapseUno"><b>Encuesta </b></span>
-          </div>
-          <div class="card-body">
-            <p class="card-text">Descripcion</p>
-          </div>
-          <div>
-            <div style="display: block">
-              <canvas baseChart
-                      [datasets]="barChartData"
-                      [options]="barChartOptions"
-                      [legend]="true"
-                      [chartType]="barChartType"
-                      [plugins]="lineChartPlugins"
-                      >
-              </canvas>
-            </div>
-          </div>
+      <div>
+        <div style="display: block">
+          <canvas 
+            height="350"
+            baseChart
+            [datasets]="barChartData"
+            [options]="barChartOptions"
+            [legend]="true"
+            [chartType]="barChartType"
+            [plugins]="lineChartPlugins"
+          >
+          </canvas>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 </div>
 
 
